@@ -1,0 +1,50 @@
+name: Reusable Release Downloader
+
+on:
+  workflow_call:
+    inputs:
+      dependencies:
+        description: 'JSON array of dependencies (repo, version)'
+        required: true
+        type: string
+    secrets:
+      gh_token:
+        required: true
+
+
+jobs:
+  download-releases:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Create target directory
+        run: mkdir -p "3rdparty"
+
+      - name: Download releases using GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.gh_token }}
+        run: |
+          echo "Starting downloads..."
+          
+          echo '${{ inputs.dependencies_array }}' | jq -c '.[]' | while read -r item; do
+            
+            repo=$(echo "$item" | jq -r '.repo')
+            version=$(echo "$item" | jq -r '.version')
+            
+            echo "----------------------------------------"
+            echo "Fetching: $repo | Tag: $version"
+            
+            # Download the asset
+            gh release download "$version" \
+              --repo "$repo" \
+              --dir 3rdparty
+              
+          done
+
+          echo "Download finished!"
+
+      - name: Upload dependencies as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3rdparty
+          path: "3rdparty/**"

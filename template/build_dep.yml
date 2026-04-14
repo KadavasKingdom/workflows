@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    tags-ignore:
+      - "release-*"
+      - "latest"
+    paths-ignore:
+      - '.github/*'
+      - '*.md'
+      - "*.yml"
+  pull_request:
+    paths-ignore:
+      - '.github/*'
+      - '*.md'
+      - "*.yml"
+  workflow_dispatch:
+    # allow manual trigger
+
+jobs:
+  dependencies:
+    uses: KadavasKingdom/workflows/.github/workflows/dependency_download.yml
+    with:
+      # version can be "latest" to download latest in-dev build.
+      dependencies: >-
+        [
+          {
+            "repo": "KadavasKingdom/SimpleCustomRoles",
+            "version": "release-v2026.0414"
+          },
+          {
+            "repo": "SlejmUr/CustomItemsAPI",
+            "version": "v0.0.9.0"
+          }
+        ]
+    secrets:
+      # Custom repos need custom secret! Edit this value to able to download internal repos.
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    permissions:
+      contents: write
+    needs: [dependencies]
+    uses: KadavasKingdom/workflows/.github/workflows/build.yml@main
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
