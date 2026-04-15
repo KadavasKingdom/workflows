@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "Starting downloads..."
           
-          echo '${{ inputs.dependencies_array }}' | jq -c '.[]' | while read -r item; do
+          echo '${{ inputs.dependencies }}' | jq -c '.[]' | while read -r item; do
             
             repo=$(echo "$item" | jq -r '.repo')
             version=$(echo "$item" | jq -r '.version')
