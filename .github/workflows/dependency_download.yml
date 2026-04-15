@@ -21,11 +21,9 @@ jobs:
         run: mkdir -p "3rdparty"
 
       - name: Download releases using GitHub CLI
-        env:
-          GH_CUSTOM_TOKEN: ${{ secrets.gh_token }}
         run: |
           echo "Login"
-          echo "${{ secrets.GH_CUSTOM_TOKEN }}" | gh auth login --with-token
+          echo "${{ secrets.gh_token }}" | gh auth login --with-token
           echo "Starting downloads..."
           
           echo '${{ inputs.dependencies }}' | jq -c '.[]' | while read -r item; do
