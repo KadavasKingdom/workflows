@@ -22,10 +22,10 @@ jobs:
 
       - name: Download releases using GitHub CLI
         env:
-          GH_TOKEN: ${{ secrets.gh_token }}
+          GH_CUSTOM_TOKEN: ${{ secrets.gh_token }}
         run: |
           echo "Login"
-          echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+          echo "${{ secrets.GH_CUSTOM_TOKEN }}" | gh auth login --with-token
           echo "Starting downloads..."
           
           echo '${{ inputs.dependencies }}' | jq -c '.[]' | while read -r item; do
