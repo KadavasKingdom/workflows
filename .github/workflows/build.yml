@@ -46,7 +46,7 @@ jobs:
         id: vars
         run: echo sha_short=${GITHUB_SHA::7} >> $GITHUB_OUTPUT
         
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: artifacts
 
