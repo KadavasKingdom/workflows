@@ -1,4 +1,4 @@
-name: Reusable Release Downloader
+name: Dependency Update
 
 on:
   workflow_call:
@@ -13,7 +13,7 @@ on:
 
 
 jobs:
-  download-releases:
+  dependency-update:
     runs-on: ubuntu-latest
     
     steps:
@@ -46,3 +46,11 @@ jobs:
         with:
           name: 3rdparty
           path: "3rdparty/**"
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: Update 3rdparty
+          title: Update 3rdparty
+          body: Update 3rdparty dependency
+          branch: auto/update-3rdparty
