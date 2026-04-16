@@ -37,7 +37,7 @@ jobs:
             # Download the asset
             gh release download "$version" \
               --repo "$repo" \
-              --dir 3rdparty
+              --dir 3rdparty --clobber
               
           done
 
