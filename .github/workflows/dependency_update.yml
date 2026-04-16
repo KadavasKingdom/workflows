@@ -54,3 +54,4 @@ jobs:
           title: Update 3rdparty
           body: Update 3rdparty dependency
           branch: auto/update-3rdparty
+          branch-suffix: short-commit-hash
