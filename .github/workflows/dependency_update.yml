@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@v6
+    
       - name: Download releases using GitHub CLI
         run: |
           mkdir -p "3rdparty"
