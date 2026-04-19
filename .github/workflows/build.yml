@@ -52,11 +52,17 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           path: artifacts
+          
+      - name: Delete old release
+        env:
+          GITHUB_TOKEN: ${{ secrets.gh_token }}
+        run: |
+          gh release delete latest --cleanup-tag -y || true
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: softprops/action-gh-release@v3
         with:
-          repo_token: "${{ secrets.gh_token }}"
-          automatic_release_tag: "latest"
+          token: "${{ secrets.gh_token }}"
+          tag_name: "latest"
           prerelease: true
           title: "Development Build"
           files: |
