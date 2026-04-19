@@ -1,0 +1,25 @@
+name: Update Dependencies
+
+on:
+  workflow_dispatch:
+    # allow manual trigger
+
+jobs:
+  update-dep:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: KadavasKingdom/workflows/.github/workflows/dependency_update.yml@main
+    with:
+      # version can be "latest" to download latest in-dev build.
+      dependencies: >-
+        [
+          {
+            "repo": "KadavasKingdom/LabApiExtensions",
+            "version": "latest"
+          }
+        ]
+    secrets:
+      # secrets.GITHUB_TOKEN <- Regular token for all public repos
+      # secrets.DL_TOKEN <- Custom token for private repos
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
