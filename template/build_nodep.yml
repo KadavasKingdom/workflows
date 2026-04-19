@@ -19,4 +19,4 @@ jobs:
       contents: write
     uses: KadavasKingdom/workflows/.github/workflows/build.yml@main
     secrets:
-      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
