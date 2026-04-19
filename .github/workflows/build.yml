@@ -26,7 +26,7 @@ jobs:
         id: refs
 
       - name: Install tools
-        run: dotnet tool install dotnet-t4
+        run: dotnet tool install -g dotnet-t4
 
       - name: Build
         run: dotnet build -c:Release -o Out
