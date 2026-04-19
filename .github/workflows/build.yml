@@ -64,6 +64,6 @@ jobs:
           token: "${{ secrets.gh_token }}"
           tag_name: "latest"
           prerelease: true
-          title: "Development Build"
+          name: "Development Build"
           files: |
             artifacts/**
