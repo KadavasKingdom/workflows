@@ -25,6 +25,9 @@ jobs:
         uses: Axwabo/scpsl-references-downloader@v1
         id: refs
 
+      - name: Install tools
+        run: dotnet tool install dotnet-t4
+
       - name: Build
         run: dotnet build -c:Release -o Out
         env:
