@@ -57,6 +57,7 @@ jobs:
           path: artifacts
           
       - name: Delete old release
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.gh_token }}
         run: |
@@ -68,5 +69,6 @@ jobs:
           tag_name: "latest"
           prerelease: true
           name: "Development Build"
+          draft: false
           files: |
             artifacts/**
