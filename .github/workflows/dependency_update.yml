@@ -7,6 +7,11 @@ on:
         description: 'JSON array of dependencies (repo, version)'
         required: true
         type: string
+      folder:
+        description: 'The name of the folder to download dependencies to.'
+        required: false
+        type: string
+        default: '3rdparty'
     secrets:
       gh_token:
         required: true
@@ -21,7 +26,7 @@ jobs:
     
       - name: Download releases using GitHub CLI
         run: |
-          mkdir -p "3rdparty"
+          mkdir -p "${{ inputs.folder }}"
           echo "Login with token..."
           echo "${{ secrets.gh_token }}" | gh auth login --with-token
           echo "Starting downloads..."
@@ -37,7 +42,7 @@ jobs:
             # Download the asset
             gh release download "$version" \
               --repo "$repo" \
-              --dir 3rdparty --clobber
+              --dir "${{ inputs.folder }}" --clobber
               
           done
 
@@ -46,14 +51,14 @@ jobs:
       - name: Upload dependencies as artifact
         uses: actions/upload-artifact@v7
         with:
-          name: 3rdparty
-          path: "3rdparty/**"
+          name: ${{ inputs.folder }}
+          path: "${{ inputs.folder }}/**"
           
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
         with:
-          commit-message: Update 3rdparty
-          title: Update 3rdparty
-          body: Update 3rdparty dependency
+          commit-message: Update dependencies
+          title: Update dependencies
+          body: Update dependencies
           branch: auto/update-3rdparty
           branch-suffix: short-commit-hash
