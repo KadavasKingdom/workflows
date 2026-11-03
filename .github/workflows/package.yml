@@ -47,7 +47,7 @@ jobs:
     - name: Release Package
       uses: softprops/action-gh-release@v3
       with:
-        files: Out/**.nupkg
+        files: Out/**
 
     - name: Publish to GitHub Packages
       run: dotnet nuget push Out/**.nupkg --source "github" --api-key ${{ secrets.gh_token }}
